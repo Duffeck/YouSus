@@ -73,5 +73,7 @@ namespace yousus.Models
             Set<TBase>().RemoveRange(lista);
             SaveChanges();
         }
+
+        public System.Data.Entity.DbSet<yousus.Models.Evento> Eventoes { get; set; }
     }
 }
