@@ -16,7 +16,7 @@ namespace yousus.Models
             PontosDescarte = new List<PontoDescarte>();
         }
 
-        public string Nome  { get; set; }
+        public string Nome { get; set; }
         public string Descricao { get; set; }
 
         public virtual ICollection<Privilegio> Privilegios { get; set; }
