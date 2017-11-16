@@ -75,5 +75,47 @@ namespace yousus.Models
         }
 
         public System.Data.Entity.DbSet<yousus.Models.Evento> Eventoes { get; set; }
+
+        public System.Data.Entity.DbSet<yousus.Models.Alerta> Alertas { get; set; }
+
+        public System.Data.Entity.DbSet<yousus.Models.Categoria> Categorias { get; set; }
+
+        public System.Data.Entity.DbSet<yousus.Models.Acao> Acaos { get; set; }
+
+        public System.Data.Entity.DbSet<yousus.Models.Area> Areas { get; set; }
+    
+        public System.Data.Entity.DbSet<yousus.Models.Administrador> Administradores { get; set; }
+
+        public System.Data.Entity.DbSet<yousus.Models.ComposicaoQuimica> ComposicaoQuimicas { get; set; }
+
+        public System.Data.Entity.DbSet<yousus.Models.DataRota> DataRotas { get; set; }
+
+        public System.Data.Entity.DbSet<yousus.Models.Denuncia> Denuncias { get; set; }
+
+        public System.Data.Entity.DbSet<yousus.Models.Foto> Fotoes { get; set; }
+
+        public System.Data.Entity.DbSet<yousus.Models.Informativo> Informativoes { get; set; }
+
+        public System.Data.Entity.DbSet<yousus.Models.Localizacao> Localizacaos { get; set; }
+
+        public System.Data.Entity.DbSet<yousus.Models.Modulo> Moduloes { get; set; }
+
+        public System.Data.Entity.DbSet<yousus.Models.Origem> Origems { get; set; }
+
+        public System.Data.Entity.DbSet<yousus.Models.Periculosidade> Periculosidades { get; set; }
+
+        public System.Data.Entity.DbSet<yousus.Models.Periodo> Periodoes { get; set; }
+
+        public System.Data.Entity.DbSet<yousus.Models.PontoDescarte> PontoDescartes { get; set; }
+
+        public System.Data.Entity.DbSet<yousus.Models.Privilegio> Privilegios { get; set; }
+
+        public System.Data.Entity.DbSet<yousus.Models.Residuo> Residuos { get; set; }
+
+        public System.Data.Entity.DbSet<yousus.Models.RotaColeta> RotaColetas { get; set; }
+
+        public System.Data.Entity.DbSet<yousus.Models.Tipo> Tipoes { get; set; }
+
+        public System.Data.Entity.DbSet<yousus.Models.ZonaVerde> ZonaVerdes { get; set; }
     }
 }
