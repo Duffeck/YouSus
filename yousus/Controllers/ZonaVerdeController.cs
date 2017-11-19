@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -17,6 +18,38 @@ namespace yousus.Controllers
     {
         private YouSusContext db = new YouSusContext();
 
+        [HttpGet]
+        [ActionName("CadastrarZonaVerde")]
+        public bool Inserir([FromUri]ZonaVerde zonaVerde, [FromUri]Localizacao localizacao)
+        {
+            zonaVerde.Localizacao = localizacao;
+
+            //ZonaVerdeDao zonaVerdeDao = new ZonaVerdeDao();
+            try
+            {
+                db.Inserir(zonaVerde);
+                return true;
+            }catch(Exception e)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        [HttpGet]
+        [ActionName("ListarZonasVerdes")]
+        public String ListarZonasVerdes()
+        {
+            List<ZonaVerde> zonasVerdes;
+            //ZonaVerdeDao dao = new ZonaVerdeDao();
+
+            zonasVerdes = db.ListarTodos<ZonaVerde>();
+                
+            return JsonConvert.SerializeObject(zonasVerdes);
+            
+        }
+        /*
         // GET: api/ZonaVerde
         public IQueryable<ZonaVerde> GetZonaVerdes()
         {
@@ -115,5 +148,6 @@ namespace yousus.Controllers
         {
             return db.ZonaVerdes.Count(e => e.Id == id) > 0;
         }
+        */
     }
 }

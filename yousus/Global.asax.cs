@@ -21,12 +21,14 @@ namespace yousus
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            this.ConfigurarMapper();
+            //var config = this.ConfigurarMapper();
         }
 
-        protected void ConfigurarMapper()
+        /*
+        protected MapperConfiguration ConfigurarMapper()
         {
-            //Mapper.Initialize(cfg => cfg.CreateMap<Categoria, CategoriaDTO>());
-        }
+            //return new MapperConfiguration(cfg => cfg.CreateMap<Categoria, CategoriaDTO>());
+            Mapper.Map<Categoria, CategoriaDTO>();
+        }*/
     }
 }

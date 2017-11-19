@@ -19,20 +19,19 @@ namespace yousus.Controllers
     public class CategoriaController : ApiController
     {
         private YouSusContext db = new YouSusContext();
-        private MapperConfiguration config = new MapperConfiguration(cfg => {
-            cfg.CreateMap<Categoria, CategoriaDTO>();
-        });
-
+        private IMapper mapper = MappingProfile.InitializeAutoMapper().CreateMapper();
 
         [HttpGet]
         [ActionName("ListarTodasCategorias")]
         public string ListarTodasCategorias()
         {
-            //IMapper mapper = config.CreateMapper();
-        //var source = new Source();
-        //var dest = mapper.Map<Source, Dest>(source);
-            List<Categoria> categorias; 
-            categorias = db.ListarTodos<Categoria>();
+            List<Categoria> categoriasAux;
+            List<CategoriaDTO> categorias = new List<CategoriaDTO>();
+            categoriasAux = db.ListarTodos<Categoria>();
+            foreach(Categoria categoria in categoriasAux)
+            {
+                categorias.Add(mapper.Map<Categoria, CategoriaDTO>(categoria));
+            }
             /*
             if(categorias.Count > 0)
             {

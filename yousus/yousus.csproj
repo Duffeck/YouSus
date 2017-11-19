@@ -243,6 +243,7 @@
     <Compile Include="Models\Foto.cs" />
     <Compile Include="Models\Informativo.cs" />
     <Compile Include="Models\Localizacao.cs" />
+    <Compile Include="Models\MappingProfile.cs" />
     <Compile Include="Models\Modulo.cs" />
     <Compile Include="Models\Origem.cs" />
     <Compile Include="Models\Periculosidade.cs" />

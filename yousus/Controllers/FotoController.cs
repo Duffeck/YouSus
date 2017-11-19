@@ -16,6 +16,25 @@ namespace yousus.Controllers
     public class FotoController : ApiController
     {
         private YouSusContext db = new YouSusContext();
+        [HttpGet]
+        [ActionName("SalvarFoto")]
+        public int Inserir([FromUri]Foto foto)
+        {
+            if (foto != null)
+            {
+                try
+                {
+                    db.Inserir(foto);
+                    return foto.Id;
+                }
+                catch (Exception e)
+                {
+                    return 0;
+                }
+            }
+            return 0;
+        }
+        /*
 
         // GET: api/Foto
         public IQueryable<Foto> GetFotoes()
@@ -115,5 +134,6 @@ namespace yousus.Controllers
         {
             return db.Fotoes.Count(e => e.Id == id) > 0;
         }
+        */
     }
 }

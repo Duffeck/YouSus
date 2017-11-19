@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -16,7 +17,25 @@ namespace yousus.Controllers
     public class InformativoController : ApiController
     {
         private YouSusContext db = new YouSusContext();
+        [HttpGet]
+        [ActionName("InformativoAleatorio")]
+        public string InformativoAleatorio()
+        {
+            Informativo informativo;
+            //InformativoDao dao = new InformativoDao();
+            //informativo = dao.InformativoAleatorio();
+            informativo = (Informativo)db.Buscar<Informativo>(p => p.Id > 0).FirstOrDefault();
+            if (informativo != null)
+            {
+                return JsonConvert.SerializeObject(informativo);
+            }
+            else
+            {
+                return "";
+            }
 
+        }
+        /*
         // GET: api/Informativo
         public IQueryable<Informativo> GetInformativoes()
         {
@@ -115,5 +134,6 @@ namespace yousus.Controllers
         {
             return db.Informativoes.Count(e => e.Id == id) > 0;
         }
+        */
     }
 }

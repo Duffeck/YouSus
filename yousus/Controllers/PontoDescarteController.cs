@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -16,7 +17,46 @@ namespace yousus.Controllers
     public class PontoDescarteController : ApiController
     {
         private YouSusContext db = new YouSusContext();
+        [HttpGet]
+        [ActionName("CadastrarPontoDescarte")]
+        public bool Inserir([FromUri]PontoDescarte pontoDescarte, [FromUri]Localizacao localizacao)
+        {
+            pontoDescarte.Localizacao = localizacao;
+            //PontoDescarteDao dao = new PontoDescarteDao();
+            try
+            {
+                db.Inserir(pontoDescarte);
+                return true;
+            }catch(Exception e)
+            {
+                return false;
+            }
+        }
 
+        [HttpGet]
+        [ActionName("ListarPontosDescarte")]
+        public String ListarPontosDescarte()
+        {
+            List<PontoDescarte> pontosDescarte;
+            //PontoDescarteDao dao = new PontoDescarteDao();
+
+            pontosDescarte = db.ListarTodos<PontoDescarte>();
+
+            return JsonConvert.SerializeObject(pontosDescarte);
+
+        }
+
+        [HttpGet]
+        [ActionName("PontoDescarteDetail")]
+        public String PontoDescarteDetail(int id)
+        {
+            //PontoDescarteDao dao = new PontoDescarteDao();
+
+            PontoDescarte ponto = db.BuscarPorId<PontoDescarte>(id);
+
+            return JsonConvert.SerializeObject(ponto);
+        }
+        /*
         // GET: api/PontoDescarte
         public IQueryable<PontoDescarte> GetPontoDescartes()
         {
@@ -115,5 +155,6 @@ namespace yousus.Controllers
         {
             return db.PontoDescartes.Count(e => e.Id == id) > 0;
         }
+        */
     }
 }

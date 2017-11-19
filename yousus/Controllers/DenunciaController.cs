@@ -17,6 +17,18 @@ namespace yousus.Controllers
     {
         private YouSusContext db = new YouSusContext();
 
+        [HttpPost]
+        [ActionName("Denunciar")]
+        public int Denunciar([FromBody]Denuncia denuncia)
+        {
+            if (denuncia != null)
+            {
+                db.Inserir(denuncia);
+                return denuncia.Id;
+            }
+            return 0;
+        }
+        /*
         // GET: api/Denuncia
         public IQueryable<Denuncia> GetDenuncias()
         {
@@ -115,5 +127,7 @@ namespace yousus.Controllers
         {
             return db.Denuncias.Count(e => e.Id == id) > 0;
         }
+        */
     }
+
 }
