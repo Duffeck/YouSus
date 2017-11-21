@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AutoMapper;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -10,13 +12,16 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using yousus.Models;
+using yousus.Models.DTO;
 
 namespace yousus.Controllers
 {
     public class LocalizacaoController : ApiController
     {
         private YouSusContext db = new YouSusContext();
+        private IMapper mapper = MappingProfile.InitializeAutoMapper().CreateMapper();
 
+        /*
         // GET: api/Localizacao
         public IQueryable<Localizacao> GetLocalizacaos()
         {
@@ -114,6 +119,24 @@ namespace yousus.Controllers
         private bool LocalizacaoExists(int id)
         {
             return db.Localizacaos.Count(e => e.Id == id) > 0;
+        }
+        */
+
+        [HttpPost]
+        [ActionName("ListarPorCategoria")]
+        public string ListarPorCategoria(int id_categoria)
+        {
+            Categoria categoria = db.BuscarPorId<Categoria>(id_categoria);
+            List<PontoDescarte> pontos = db.Buscar<PontoDescarte>(p => p.Categoria.Id == categoria.Id);
+            List<LocalizacaoDTO> localizacoes = new List<LocalizacaoDTO>();
+            foreach(PontoDescarte ponto in pontos)
+            {
+                if(ponto.Localizacao != null)
+                {
+                    localizacoes.Add(mapper.Map<Localizacao, LocalizacaoDTO>(ponto.Localizacao));
+                }
+            }
+            return JsonConvert.SerializeObject(localizacoes);
         }
     }
 }

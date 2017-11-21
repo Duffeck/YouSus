@@ -118,7 +118,7 @@ namespace yousus.Controllers
             {
                 tiposDto.Add(mapper.Map<Tipo, TipoDTO>(tipo));
             }
-            return JsonConvert.SerializeObject(tipos);
+            return JsonConvert.SerializeObject(tiposDto);
         }
         [HttpGet]
         [ActionName("ListarComposicaoQuimica")]
@@ -141,7 +141,7 @@ namespace yousus.Controllers
             {
                 compQuimicaDto.Add(mapper.Map<ComposicaoQuimica, ComposicaoQuimicaDTO>(composicao));
             }
-            return JsonConvert.SerializeObject(compQuimica);
+            return JsonConvert.SerializeObject(compQuimicaDto);
         }
         [HttpPost]
         [ActionName("SalvarCategoria")]

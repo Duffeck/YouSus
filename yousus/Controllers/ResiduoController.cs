@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using AutoMapper;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -11,19 +12,22 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using yousus.Models;
+using yousus.Models.DTO;
 
 namespace yousus.Controllers
 {
     public class ResiduoController : ApiController
     {
         private YouSusContext db = new YouSusContext();
-        [HttpGet]
+        private IMapper mapper = MappingProfile.InitializeAutoMapper().CreateMapper();
+
+        [HttpPost]
         [ActionName("SalvarResiduo")]
-        public int Inserir([FromUri]Residuo residuo, [FromUri]int[] id_fotos)
+        public int Inserir(Residuo residuo, [FromUri]int[] id_fotos)
         {
             if (residuo != null)
             {
-                residuo.Categoria = new Categoria();
+                //residuo.Categoria = new Categoria();
                 if (id_fotos.Length > 0)
                 {
                     foreach (int id_foto in id_fotos)
@@ -38,6 +42,18 @@ namespace yousus.Controllers
                 //ResiduoDao dao = new ResiduoDao();
                 try
                 {
+                    if(residuo.Categoria != null)
+                    {
+                        var categoria = db.BuscarPorId<Categoria>(residuo.Categoria.Id);
+                        if (categoria != null)
+                        {
+                            residuo.Categoria = categoria;
+                        }
+                        else
+                        {
+                            residuo.Categoria = null;
+                        }
+                    }
                     db.Inserir(residuo);
                     return residuo.Id;
                 }catch(Exception e)
@@ -55,6 +71,7 @@ namespace yousus.Controllers
 
             //SqlServerDao dao = new SqlServerDao();
             List<Residuo> residuos;
+            List<ResiduoDTO> residuosDto = new List<ResiduoDTO>();
             if (ultimoId > 0)
             {
                 residuos = db.BuscarComPaginacao<Residuo>(p => p.Id > 0, 3, ultimoId);
@@ -66,7 +83,11 @@ namespace yousus.Controllers
 
             if (residuos != null)
             {
-                return JsonConvert.SerializeObject(residuos);
+                foreach(Residuo residuo in residuos)
+                {
+                    residuosDto.Add(mapper.Map<Residuo, ResiduoDTO>(residuo));
+                }
+                return JsonConvert.SerializeObject(residuosDto);
             }
             else
             {
