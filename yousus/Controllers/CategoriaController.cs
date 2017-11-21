@@ -27,11 +27,14 @@ namespace yousus.Controllers
         {
             List<Categoria> categoriasAux;
             List<CategoriaDTO> categorias = new List<CategoriaDTO>();
+            //categorias = mapper.Map<List<Categoria>, List<CategoriaDTO>>(db.ListarTodos<Categoria>());
+            
             categoriasAux = db.ListarTodos<Categoria>();
             foreach(Categoria categoria in categoriasAux)
             {
                 categorias.Add(mapper.Map<Categoria, CategoriaDTO>(categoria));
             }
+            
             /*
             if(categorias.Count > 0)
             {
@@ -56,6 +59,7 @@ namespace yousus.Controllers
             //List<Origem> origens;
             //origens = db.ListarOrigem(categoria);
             List<Origem> origens;
+            List<OrigemDTO> origensDto = new List<OrigemDTO>();
             if (categoria.Id != 0)
             {
                 origens = db.Buscar<Origem>(o => o.Categorias.Where(c => c.Id == categoria.Id).FirstOrDefault() != null);
@@ -64,7 +68,11 @@ namespace yousus.Controllers
             {
                 origens = db.ListarTodos<Origem>();
             }
-            return JsonConvert.SerializeObject(origens);
+            foreach(Origem origem in origens)
+            {
+                origensDto.Add(mapper.Map<Origem, OrigemDTO>(origem));
+            }
+            return JsonConvert.SerializeObject(origensDto);
         }
 
         [HttpGet]
@@ -74,6 +82,7 @@ namespace yousus.Controllers
             //List<Periculosidade> periculosidades;
             //periculosidades = dao.ListarPericulosidade(categoria);
             List<Periculosidade> periculosidades;
+            List<PericulosidadeDTO> periculosidadesDto = new List<PericulosidadeDTO>();
             if (categoria.Id != 0)
             {
                 periculosidades = db.Buscar<Periculosidade>(o => o.Categorias.Where(c => c.Id == categoria.Id) != null);
@@ -82,7 +91,10 @@ namespace yousus.Controllers
             {
                 periculosidades = db.ListarTodos<Periculosidade>();
             }
-            return JsonConvert.SerializeObject(periculosidades);
+            foreach(Periculosidade periculosidade in periculosidades){
+                periculosidadesDto.Add(mapper.Map<Periculosidade, PericulosidadeDTO>(periculosidade));
+            }
+            return JsonConvert.SerializeObject(periculosidadesDto);
         }
 
         [HttpGet]
@@ -93,6 +105,7 @@ namespace yousus.Controllers
             //CategoriaDao dao = new CategoriaDao();
             //tipos = dao.ListarTipo(categoria);
             List<Tipo> tipos;
+            List<TipoDTO> tiposDto = new List<TipoDTO>();
             if (categoria.Id != 0)
             {
                 tipos = db.Buscar<Tipo>(o => o.Categorias.Where(c => c.Id == categoria.Id) != null);
@@ -100,6 +113,10 @@ namespace yousus.Controllers
             else
             {
                 tipos = db.ListarTodos<Tipo>();
+            }
+            foreach(Tipo tipo in tipos)
+            {
+                tiposDto.Add(mapper.Map<Tipo, TipoDTO>(tipo));
             }
             return JsonConvert.SerializeObject(tipos);
         }
@@ -111,6 +128,7 @@ namespace yousus.Controllers
             //CategoriaDao dao = new CategoriaDao();
             //compQuimica = dao.ListarComposicaoQuimica(categoria);
             List<ComposicaoQuimica> compQuimica;
+            List<ComposicaoQuimicaDTO> compQuimicaDto = new List<ComposicaoQuimicaDTO>();
             if (categoria.Id != 0)
             {
                 compQuimica = db.Buscar<ComposicaoQuimica>(o => o.Categorias.Where(c => c.Id == categoria.Id) != null);
@@ -118,6 +136,10 @@ namespace yousus.Controllers
             else
             {
                 compQuimica = db.ListarTodos<ComposicaoQuimica>();
+            }
+            foreach(ComposicaoQuimica composicao in compQuimica)
+            {
+                compQuimicaDto.Add(mapper.Map<ComposicaoQuimica, ComposicaoQuimicaDTO>(composicao));
             }
             return JsonConvert.SerializeObject(compQuimica);
         }
