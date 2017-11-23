@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using AutoMapper;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -11,18 +12,29 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using yousus.Models;
+using yousus.Models.DTO;
 
 namespace yousus.Controllers
 {
     public class PontoDescarteController : ApiController
     {
         private YouSusContext db = new YouSusContext();
-        [HttpGet]
+        private IMapper mapper = MappingProfile.InitializeAutoMapper().CreateMapper();
+
+        [HttpPost]
         [ActionName("CadastrarPontoDescarte")]
-        public bool Inserir([FromUri]PontoDescarte pontoDescarte, [FromUri]Localizacao localizacao)
+        public bool Inserir(PontoDescarte pontoDescarte)
         {
-            pontoDescarte.Localizacao = localizacao;
+            //pontoDescarte.Localizacao = localizacao;
             //PontoDescarteDao dao = new PontoDescarteDao();
+            if(pontoDescarte.Categoria != null)
+            {
+                Categoria categoria = db.BuscarPorId<Categoria>(pontoDescarte.Categoria.Id);
+                if(categoria != null)
+                {
+                    pontoDescarte.Categoria = categoria;
+                }
+            }
             try
             {
                 db.Inserir(pontoDescarte);
@@ -35,14 +47,42 @@ namespace yousus.Controllers
 
         [HttpGet]
         [ActionName("ListarPontosDescarte")]
-        public String ListarPontosDescarte()
+        public string ListarPontosDescarte()
         {
             List<PontoDescarte> pontosDescarte;
-            //PontoDescarteDao dao = new PontoDescarteDao();
-
+            List<PontoDescarteDTO> pontosDescarteDto = new List<PontoDescarteDTO>();
             pontosDescarte = db.ListarTodos<PontoDescarte>();
+            if(pontosDescarte.Count() > 0)
+            {
+                foreach(PontoDescarte ponto in pontosDescarte)
+                {
+                    pontosDescarteDto.Add(mapper.Map<PontoDescarte, PontoDescarteDTO>(ponto));
+                }
+                return JsonConvert.SerializeObject(pontosDescarteDto);
+            }
+            return "";
 
-            return JsonConvert.SerializeObject(pontosDescarte);
+        }
+
+        [HttpGet]
+        [ActionName("ListarPontosPorCategoria")]
+        public string ListarPontosDescarteCategoria(int id_categoria)
+        {
+            List<PontoDescarte> pontosDescarte;
+            List<PontoDescarteDTO> pontosDescarteDto = new List<PontoDescarteDTO>();
+            if (id_categoria > 0)
+            {
+                pontosDescarte = db.Buscar<PontoDescarte>(p => p.Categoria.Id == id_categoria);
+                if (pontosDescarte.Count() > 0)
+                {
+                    foreach (PontoDescarte ponto in pontosDescarte)
+                    {
+                        pontosDescarteDto.Add(mapper.Map<PontoDescarte, PontoDescarteDTO>(ponto));
+                    }
+                    return JsonConvert.SerializeObject(pontosDescarteDto);
+                }
+            }
+            return "";
 
         }
 

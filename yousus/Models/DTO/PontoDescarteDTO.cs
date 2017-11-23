@@ -11,5 +11,6 @@ namespace yousus.Models.DTO
         public int Id { get; set; }
         public string Estado { get; set; }
         public bool EhPArticular { get; set; }
+        public LocalizacaoDTO Localizacao { get; set; }
     }
 }
