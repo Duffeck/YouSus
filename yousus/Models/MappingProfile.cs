@@ -15,6 +15,8 @@ namespace yousus.Models
             {
                 cfg.CreateMap<Categoria, CategoriaDTO>();
                 cfg.CreateMap<CategoriaDTO, Categoria>();
+                cfg.CreateMap<Foto, FotoDTO>();
+                cfg.CreateMap<FotoDTO, Foto>();
                 /*etc...*/
             });
 

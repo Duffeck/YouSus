@@ -28,6 +28,7 @@ namespace yousus.Controllers
             if (residuo != null)
             {
                 //residuo.Categoria = new Categoria();
+                /*
                 if (id_fotos.Length > 0)
                 {
                     foreach (int id_foto in id_fotos)
@@ -38,6 +39,19 @@ namespace yousus.Controllers
                             residuo.Fotos.Add(foto);
                         }
                     }
+                }*/
+                if (residuo.Fotos.Count > 0)
+                {
+                    List<Foto> fotos_aux = new List<Foto>();
+                    foreach (Foto foto in residuo.Fotos)
+                    {
+                        Foto foto_aux = db.BuscarPorId<Foto>(foto.Id);
+                        if (foto_aux != null)
+                        {
+                            fotos_aux.Add(foto_aux);
+                        }
+                    }
+                    residuo.Fotos = fotos_aux;
                 }
                 //ResiduoDao dao = new ResiduoDao();
                 try

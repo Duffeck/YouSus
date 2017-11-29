@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using AutoMapper;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -11,12 +12,14 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using yousus.Models;
+using yousus.Models.DTO;
 
 namespace yousus.Controllers
 {
     public class UsuariosController : ApiController
     {
         private YouSusContext db = new YouSusContext();
+        private IMapper mapper = MappingProfile.InitializeAutoMapper().CreateMapper();
 
         /*
         // GET: api/Usuarios
@@ -106,7 +109,9 @@ namespace yousus.Controllers
             //db.Usuarios.Add(usuario);
             //await db.SaveChangesAsync();
             if(user != null) {
-                return JsonConvert.SerializeObject(user);
+                UsuarioDTO userDTO = new UsuarioDTO();
+                userDTO = mapper.Map<Usuario, UsuarioDTO>(usuario);
+                return JsonConvert.SerializeObject(userDTO);
             } else {
                 return "";
             }

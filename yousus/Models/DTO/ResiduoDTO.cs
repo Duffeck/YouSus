@@ -14,5 +14,6 @@ namespace yousus.Models.DTO
         public string Estado { get; set; }
         public string Observacao { get; set; }
         public CategoriaDTO Categoria { get; set; }
+        public List<FotoDTO> Fotos { get; set; }
     }
 }
