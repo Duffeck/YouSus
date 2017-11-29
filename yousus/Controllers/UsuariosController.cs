@@ -110,7 +110,7 @@ namespace yousus.Controllers
             //await db.SaveChangesAsync();
             if(user != null) {
                 UsuarioDTO userDTO = new UsuarioDTO();
-                userDTO = mapper.Map<Usuario, UsuarioDTO>(usuario);
+                userDTO = mapper.Map<Usuario, UsuarioDTO>(user);
                 return JsonConvert.SerializeObject(userDTO);
             } else {
                 return "";

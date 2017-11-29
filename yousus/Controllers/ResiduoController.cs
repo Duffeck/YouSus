@@ -53,6 +53,18 @@ namespace yousus.Controllers
                     }
                     residuo.Fotos = fotos_aux;
                 }
+                if(residuo.Usuario != null)
+                {
+                    Usuario usuario = db.BuscarPorId<Usuario>(residuo.Usuario.Id);
+                    if(usuario != null)
+                    {
+                        residuo.Usuario = usuario;
+                    }
+                    else
+                    {
+                        residuo.Usuario = null;
+                    }
+                }
                 //ResiduoDao dao = new ResiduoDao();
                 try
                 {
