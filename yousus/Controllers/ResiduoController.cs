@@ -94,6 +94,37 @@ namespace yousus.Controllers
                 return "";
             }
         }
+
+        [HttpGet]
+        [ActionName("ListarResiduosPorNome")]
+        public string ListarResiduosPorNome([FromUri] string nome)
+        {
+
+            //SqlServerDao dao = new SqlServerDao();
+            List<Residuo> residuos;
+            List<ResiduoDTO> residuosDto = new List<ResiduoDTO>();
+            if (nome != null && nome.Length > 0)
+            {
+                residuos = db.Buscar<Residuo>(p => p.Nome.ToLower().Contains(nome.ToLower()));
+            }
+            else
+            {
+                return "";
+            }
+
+            if (residuos != null)
+            {
+                foreach (Residuo residuo in residuos)
+                {
+                    residuosDto.Add(mapper.Map<Residuo, ResiduoDTO>(residuo));
+                }
+                return JsonConvert.SerializeObject(residuosDto);
+            }
+            else
+            {
+                return "";
+            }
+        }
         /*
         // GET: api/Residuo
         public IQueryable<Residuo> GetResiduos()
