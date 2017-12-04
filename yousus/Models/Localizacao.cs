@@ -18,7 +18,7 @@ namespace yousus.Models
 
         //public virtual ICollection<PontoDescarte> PontosDescarte { get; set; }
         //public virtual ZonaVerde ZonaVerde { get; set; }
-        //public virtual Usuario Usuario { get; set; }
+        public virtual Usuario Usuario { get; set; }
 
     }
 }

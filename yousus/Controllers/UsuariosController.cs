@@ -108,20 +108,23 @@ namespace yousus.Controllers
 
             //db.Usuarios.Add(usuario);
             //await db.SaveChangesAsync();
-            if(user != null) {
+            if (user != null)
+            {
                 UsuarioDTO userDTO = new UsuarioDTO();
                 userDTO = mapper.Map<Usuario, UsuarioDTO>(user);
                 return JsonConvert.SerializeObject(userDTO);
-            } else {
+            }
+            else
+            {
                 return "";
             }
             //return CreatedAtRoute("DefaultApi", new { id = user.Id }, user);
-   
+
         }
 
         [HttpPost]
         [ActionName("CadastrarUsuario")]
-        public string CadastrarUsuario([FromUri]Usuario usuario)
+        public string CadastrarUsuario(Usuario usuario)
         {
             Usuario user = new Usuario()
             {
@@ -172,5 +175,26 @@ namespace yousus.Controllers
             return db.Usuarios.Count(e => e.Id == id) > 0;
         }
         */
+
+        [HttpPost]
+        [ActionName("InserirLocalizacao")]
+        public int InserirLocalizacao(Localizacao localizacao)
+        {
+            if(localizacao != null)
+            {
+                if (localizacao.Usuario != null)
+                {
+                    Usuario usuario = db.BuscarPorId<Usuario>(localizacao.Usuario.Id);
+                    if(usuario != null)
+                    {
+                        localizacao.Usuario = usuario;
+                        db.Localizacaos.Add(localizacao);
+                        db.SaveChanges();
+                        return localizacao.Id;
+                    }
+                }
+            }
+            return 0;
+        }
     }
 }

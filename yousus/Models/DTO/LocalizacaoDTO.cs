@@ -12,5 +12,8 @@ namespace yousus.Models.DTO
         public string Latitude { get; set; }
         public string Longitude { get; set; }
 
+        //public ICollection<PontoDescarteDTO> PontosDescarte { get; set; }
+        //public ZonaVerdeDTO ZonaVerde { get; set; }
+        public UsuarioDTO Usuario { get; set; }
     }
 }
